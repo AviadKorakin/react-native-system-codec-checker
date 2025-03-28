@@ -10,18 +10,6 @@ npm install react-native-system-codec-checker
 
 ## Usage
 
-<<<<<<< HEAD
-
-```js
-import { multiply } from 'react-native-system-codec-checker';
-
-// ...
-
-const result = multiply(3, 7);
-```
-
-
-=======
 ```js
 import { Text, ScrollView, StyleSheet, Platform } from 'react-native';
 import {
@@ -117,7 +105,6 @@ const styles = StyleSheet.create({
 });
 ```
 
->>>>>>> 9c2d40d (chore: update readme.me)
 ## Contributing
 
 See the [contributing guide](CONTRIBUTING.md) to learn how to contribute to the repository and the development workflow.
