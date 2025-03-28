@@ -28,4 +28,8 @@ RCT_EXPORT_MODULE()
     return @(result);
 }
 
+<<<<<<< HEAD
 @end
+=======
+@end
+>>>>>>> 9c2d40d (chore: update readme.me)
