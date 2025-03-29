@@ -1,5 +1,6 @@
 import Foundation
 import AudioToolbox
+import CoreAudio
 
 public enum AudioCodecType: String {
 case AAC = "AAC"         // Advanced Audio Coding (AAC)
@@ -44,7 +45,10 @@ case DVI_INTEL_IMA = "DVI_INTEL_IMA"    // DVI Intel IMA
 case MICROSOFT_GSM = "MICROSOFT_GSM" // Microsoft GSM
 case AES3 = "AES3"              // AES3
 case ENHANCED_AC3 = "ENHANCED_AC3" // Enhanced AC-3
-case APAC = "APAC"              // APAC codec
+#if os(macOS)
+    @available(macOS 10.15, *)
+    case APAC = "APAC"
+    #endif
 
 // MPEG-4 AAC variants
 case MPEG4AAC_HE = "MPEG4AAC_HE"         // HE-AAC
@@ -199,8 +203,14 @@ extension AudioCodecType {
             return kAudioFormatFLAC
         case .OPUS:
             return kAudioFormatOpus
+       #if os(macOS)
         case .APAC:
-            return kAudioFormatAPAC
+            if #available(macOS 10.15, *) {
+                return kAudioFormatAPAC
+            } else {
+                return nil
+            }
+        #endif
         case .PCM_CODEC:
             return kAudioFormatLinearPCM
         default:
