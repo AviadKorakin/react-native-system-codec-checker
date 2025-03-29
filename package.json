@@ -1,6 +1,6 @@
 {
   "name": "react-native-system-codec-checker",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Checks if your system has the requirement to encode/decode based on encoder decoder hardware",
   "source": "./src/index.tsx",
   "main": "./lib/commonjs/index.js",
