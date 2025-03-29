@@ -10,13 +10,16 @@ export * from './PixelFormat';
 export function isVideoCodecSupported(
   videoCodecType: VideoCodecType,
   pixelFormat: PixelFormat,
-  forEncoder: boolean
+  forEncoder: boolean,
+  width: number = 1920,
+  height: number = 1080
 ): boolean {
-  // The enum values are strings so they work directly with the native bridge.
   return SystemCodecChecker.isVideoCodecSupported(
     videoCodecType,
     pixelFormat,
-    forEncoder
+    forEncoder,
+    width,
+    height
   );
 }
 
@@ -30,11 +33,15 @@ export function isAudioCodecSupported(
 export function isCodecConfigurationSupported(
   videoCodecType: VideoCodecType,
   pixelFormat: PixelFormat,
-  audioCodecType: AudioCodecType
+  audioCodecType: AudioCodecType,
+  width: number = 1920,
+  height: number = 1080
 ): boolean {
   return SystemCodecChecker.isCodecConfigurationSupported(
     videoCodecType,
     pixelFormat,
-    audioCodecType
+    audioCodecType,
+    width,
+    height
   );
 }

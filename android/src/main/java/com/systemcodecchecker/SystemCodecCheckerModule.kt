@@ -19,13 +19,15 @@ class SystemCodecCheckerModule(reactContext: ReactApplicationContext) :
   }
 
   override fun isVideoCodecSupported(
-          videoCodecType: String,
-          pixelFormat: String,
-          forEncoder: Boolean
+    videoCodecType: String?,
+    pixelFormat: String?,
+    forEncoder: Boolean,
+    width: Double?,
+    height: Double?
   ): Boolean {
     return try {
-      val videoEnum = VideoCodecType.valueOf(videoCodecType)
-      val pixelEnum = PixelFormat.valueOf(pixelFormat)
+      val videoEnum = VideoCodecType.valueOf(videoCodecType.toString())
+      val pixelEnum = PixelFormat.valueOf(pixelFormat.toString())
       SystemCodecChecker.isVideoCodecSupported(videoEnum, pixelEnum, forEncoder)
     } catch (e: Exception) {
       false
@@ -42,14 +44,16 @@ class SystemCodecCheckerModule(reactContext: ReactApplicationContext) :
   }
 
   override fun isCodecConfigurationSupported(
-          videoCodecType: String,
-          pixelFormat: String,
-          audioCodecType: String
+    videoCodecType: String?,
+    pixelFormat: String?,
+    audioCodecType: String?,
+    width: Double?,
+    height: Double?
   ): Boolean {
     return try {
-      val videoEnum = VideoCodecType.valueOf(videoCodecType)
-      val pixelEnum = PixelFormat.valueOf(pixelFormat)
-      val audioEnum = AudioCodecType.valueOf(audioCodecType)
+      val videoEnum = VideoCodecType.valueOf(videoCodecType.toString())
+      val pixelEnum = PixelFormat.valueOf(pixelFormat.toString())
+      val audioEnum = AudioCodecType.valueOf(audioCodecType.toString())
       SystemCodecChecker.isCodecConfigurationSupported(videoEnum, pixelEnum, audioEnum)
     } catch (e: Exception) {
       false

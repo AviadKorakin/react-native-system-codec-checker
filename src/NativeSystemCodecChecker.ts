@@ -5,13 +5,19 @@ export interface Spec extends TurboModule {
   isVideoCodecSupported(
     videoCodecType: string,
     pixelFormat: string,
-    forEncoder: boolean
+    forEncoder: boolean,
+    width?: number | null,
+    height?: number | null
   ): boolean;
+
   isAudioCodecSupported(audioCodecType: string, forEncoder: boolean): boolean;
+
   isCodecConfigurationSupported(
     videoCodecType: string,
     pixelFormat: string,
-    audioCodecType: string
+    audioCodecType: string,
+    width?: number | null,
+    height?: number | null
   ): boolean;
 }
 
