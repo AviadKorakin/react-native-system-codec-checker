@@ -1,92 +1,57 @@
-import { Text, ScrollView, StyleSheet, Platform } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
+import Video from 'react-native-video';
 import {
   isVideoCodecSupported,
-  isAudioCodecSupported,
-  isCodecConfigurationSupported,
-  AudioCodecType,
   VideoCodecType,
   PixelFormat,
 } from 'react-native-system-codec-checker';
 
-// Basic simulator check. For a robust check consider using a library like react-native-device-info.
-const isSimulator =
-  Platform.OS === 'ios' && !!process.env.SIMULATOR_DEVICE_NAME;
+const App = () => {
+  // Define video sources
+  const h264Video = require('../videos/H264.mp4');
+  const hevcVideo = require('../videos/HVEC.mp4');
 
-export default function App() {
-  // HEVC is generally not supported on the iOS Simulator.
-  const hevcVideoSupported = isVideoCodecSupported(
+  // Check for HEVC support
+  const hevcSupported = isVideoCodecSupported(
     VideoCodecType.HEVC,
     PixelFormat.COLOR_FormatYUV420Flexible,
-    false
+    false,
+    1920,
+    1080
   );
 
-  // H264 is widely supported (both on device and simulator).
-  const h264VideoSupported = isVideoCodecSupported(
-    VideoCodecType.H264,
-    PixelFormat.COLOR_FormatYUV420Flexible,
-    false
-  );
-
-  // AAC audio should be supported.
-  const aacAudioSupported = isAudioCodecSupported(AudioCodecType.AAC, false);
-
-  // Codec configuration tests:
-  // HEVC + AAC: On a simulator, this should report as not supported.
-  const hevcAacConfig = isCodecConfigurationSupported(
-    VideoCodecType.HEVC,
-    PixelFormat.COLOR_FormatYUV420Flexible,
-    AudioCodecType.AAC
-  );
-
-  // H264 + AAC: This configuration is expected to be supported.
-  const h264AacConfig = isAudioCodecSupported(AudioCodecType.AAC, false);
+  // Select video source based on support
+  const selectedVideo = hevcSupported ? hevcVideo : h264Video;
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <View style={styles.container}>
       <Text style={styles.text}>
-        HEVC Video Support:{' '}
-        {Platform.OS === 'ios' && isSimulator
-          ? 'Not Supported (Simulator)'
-          : hevcVideoSupported
-            ? 'Supported'
-            : 'Not Supported'}
+        {hevcSupported ? 'Playing HEVC (H.265) Video' : 'Playing H.264 Video'}
       </Text>
-      <Text style={styles.text}>
-        H264 Video Support: {h264VideoSupported ? 'Supported' : 'Not Supported'}
-      </Text>
-      <Text style={styles.text}>
-        AAC Audio Support: {aacAudioSupported ? 'Supported' : 'Not Supported'}
-      </Text>
-      <Text style={styles.text}>
-        Codec Config (HEVC + AAC):{' '}
-        {Platform.OS === 'ios' && isSimulator
-          ? 'Not Supported (Simulator)'
-          : hevcAacConfig
-            ? 'Supported'
-            : 'Not Supported'}
-      </Text>
-      <Text style={styles.text}>
-        Codec Config (H264 + AAC):{' '}
-        {h264AacConfig ? 'Supported' : 'Not Supported'}
-      </Text>
-      {Platform.OS === 'ios' && (
-        <Text style={styles.text}>
-          Running on {isSimulator ? 'iOS Simulator' : 'iOS Device'}
-        </Text>
-      )}
-    </ScrollView>
+      <Video
+        source={selectedVideo}
+        style={styles.video}
+        controls={true}
+        resizeMode="contain"
+      />
+    </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
-    flexGrow: 1,
-    alignItems: 'center',
+    flex: 1,
     justifyContent: 'center',
-    padding: 20,
+    alignItems: 'center',
   },
   text: {
-    fontSize: 16,
-    marginVertical: 8,
+    fontSize: 18,
+    marginBottom: 10,
+  },
+  video: {
+    width: '100%',
+    height: 300,
   },
 });
+
+export default App;
