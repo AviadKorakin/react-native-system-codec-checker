@@ -45,10 +45,8 @@ case DVI_INTEL_IMA = "DVI_INTEL_IMA"    // DVI Intel IMA
 case MICROSOFT_GSM = "MICROSOFT_GSM" // Microsoft GSM
 case AES3 = "AES3"              // AES3
 case ENHANCED_AC3 = "ENHANCED_AC3" // Enhanced AC-3
-#if os(macOS)
-    @available(macOS 10.15, *)
-    case APAC = "APAC"
-    #endif
+case APAC = "APAC"
+
 
 // MPEG-4 AAC variants
 case MPEG4AAC_HE = "MPEG4AAC_HE"         // HE-AAC
@@ -108,6 +106,7 @@ extension AudioCodecType {
     case .MICROSOFT_GSM: return "audio/microsoftgsm"
     case .AES3: return "audio/aes3"
     case .ENHANCED_AC3: return "audio/enhancedac3"
+    
     case .APAC: return "audio/apac"
       
     case .MPEG4AAC_HE: return "audio/mpeg4aac-he"
